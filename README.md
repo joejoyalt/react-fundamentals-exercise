@@ -19,4 +19,4 @@
 - [ ] Bonus: add error messages for form fields.
 - [ ] Bonus: add touched states for form fields.
 
-Use mock api call from the api.js file.
+Use mock api calls from the api.js file.
