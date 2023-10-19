@@ -148,8 +148,11 @@ export const getAttendants = () =>
     }, 2000);
   });
 
-export const addAttendant = (attendant) => {
-  inMemoryAttendants = [...inMemoryAttendants, attendant];
+export const addAttendant = (attendant) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      inMemoryAttendants = [...inMemoryAttendants, attendant];
 
-  return Promise.resolve();
-};
+      resolve({ status: 200 });
+    }, 2000);
+  });
