@@ -6,10 +6,10 @@
 # Tasks
 
 - [ ] Create an attendant form which has the following fields:
-- Name;
-- Last name;
-- Job title (selected from a job title list which is fetched from a mock database);
-- Age;
+- Name (name);
+- Last name (lastName);
+- Job title (selected from a job title list which is fetched from a mock database) (jobTitle);
+- Age (age);
 - [ ] On submit, display the submitted attendant data in the page and clear form.
 - [ ] Allow multiple submissions.
 - [ ] Show job titles in a sorted order.
