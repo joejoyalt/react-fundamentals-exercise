@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { getJobTitles, addAttendant, getAttendants } from '../api';
 import Card from "./Card";
+import Loader from './loader';
 
 function Form() {
   const [attendantsApi, setAttendants] = useState([])
   const [jobTitlesApi, setJobTitlesApi] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const nameRef = useRef(null);
   const lastNameRef = useRef(null);
@@ -13,11 +15,13 @@ function Form() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsLoading(true)
     const { name, lastName, jobTitle, age } = e.target
     const attendant = { name: name.value, lastName: lastName.value, jobTitle: jobTitle.value, age: age.value }
     await addAttendant(attendant)
     e.target.reset();
-    getAttendantsApi()
+    await getAttendantsApi()
+    setIsLoading(false)
   }
 
   const getAttendantsApi = async () => {
@@ -29,18 +33,18 @@ function Form() {
     const getTitlesOfJob = async () => {
       const res = await getJobTitles()
       setJobTitlesApi(res.data)
+      setIsLoading(false)
     }
     getTitlesOfJob()
   }, [])
 
-  console.log(attendantsApi)
-
   return (
     <section className="center-text">
+      {isLoading ? <Loader /> : null}
       <form onSubmit={e => handleSubmit(e)}>
         <div>
           <label htmlFor='name'>First Name</label><br />
-          <input ref={nameRef} name='name' id='name' placeholder='Jhon ' />
+          <input ref={nameRef} name='name' id='name' placeholder='John' />
         </div>
         <br />
         <div>
