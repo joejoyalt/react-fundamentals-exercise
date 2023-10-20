@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Card({employer}) {
+function Card({ attendant }) {
 	return (
 		<article className="center-text">
-			<h3>{employer.name}</h3>
-			<p>{employer.jobTitle}</p>
-			<p>{employer.age}</p>
+			<h3>{attendant.name}</h3>
+			<p>{attendant.jobTitle}</p>
+			<p>{attendant.age}</p>
 		</article>
 	)
 }

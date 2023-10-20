@@ -1,31 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { getJobTitles } from '../api';
+import { getJobTitles, addAttendant, getAttendants } from '../api';
 import Card from "./Card";
 
 function Form() {
-  const [employee, setEmployee] = useState([])
-  const [jobTitlesFromApi, setJobTitlesFromApi] = useState([])
+  const [attendantsApi, setAttendants] = useState([])
+  const [jobTitlesApi, setJobTitlesApi] = useState([])
 
   const nameRef = useRef(null);
   const lastNameRef = useRef(null);
   const jobTitleRef = useRef(null);
   const ageRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const { name, lastName, jobTitle, age } = e.target
-    const employer = { name: name.value, lastName: lastName.value, jobTitle: jobTitle.value, age: age.value }
-    setEmployee([...employee, employer]);
+    const attendant = { name: name.value, lastName: lastName.value, jobTitle: jobTitle.value, age: age.value }
+    await addAttendant(attendant)
     e.target.reset();
+    getAttendantsApi()
   }
-  
+
+  const getAttendantsApi = async () => {
+    const res = await getAttendants()
+    setAttendants(res.data)
+  }
+
   useEffect(() => {
     const getTitlesOfJob = async () => {
       const res = await getJobTitles()
-      setJobTitlesFromApi(res.data)
+      setJobTitlesApi(res.data)
     }
     getTitlesOfJob()
   }, [])
+
+  console.log(attendantsApi)
 
   return (
     <section className="center-text">
@@ -43,8 +51,8 @@ function Form() {
         <div>
           <label htmlFor='jobTitle'>Job Title</label><br />
           <select ref={jobTitleRef} name='jobTitle' id="jobTitle">
-            {jobTitlesFromApi.length > 0 &&
-              jobTitlesFromApi.sort().map((option, index) => {
+            {jobTitlesApi.length > 0 &&
+              jobTitlesApi.sort().map((option, index) => {
                 return (<option key={index} value={option}>{option}</option>)
               })}
           </select>
@@ -57,10 +65,10 @@ function Form() {
         <button type='submit'>Submit</button>
       </form>
       <h2 className="center-text">Current users</h2>
-      {employee.length > 0 &&
-        employee.sort(function (a, b) { return a.age - b.age; }).map((employer, index) => {
+      {attendantsApi.length > 0 &&
+        attendantsApi.sort(function (a, b) { return a.age - b.age; }).map((attendant, index) => {
           return (
-            <Card key={index} employer={employer} />
+            <Card key={index} attendant={attendant} />
           )
         })}
     </section>

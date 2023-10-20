@@ -150,6 +150,7 @@ export const getAttendants = () =>
 
 export const addAttendant = (attendant) =>
   new Promise((resolve) => {
+    console.log(attendant)
     setTimeout(() => {
       inMemoryAttendants = [...inMemoryAttendants, attendant];
 
