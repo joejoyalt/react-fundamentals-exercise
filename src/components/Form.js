@@ -63,43 +63,48 @@ function Form() {
 
   return (
     <>
-      <section className="center-text">
+      <section className="form-grid">
         {isLoading ? <Loader /> : null}
-        <form onSubmit={e => handleSubmit(e)}>
-          <div>
-            <label htmlFor='name'>First Name</label><br />
-            <input ref={nameRef} name='name' id='name' placeholder='John' required />
+        <div className=''>
+          <h2>Create new user</h2>
+          <form onSubmit={e => handleSubmit(e)}>
+            <div>
+              <label htmlFor='name'>First Name</label><br />
+              <input ref={nameRef} name='name' id='name' placeholder='John' required />
+            </div>
+            <br />
+            <div>
+              <label htmlFor='lastName'>Last Name</label><br />
+              <input ref={lastNameRef} name='lastName' id='lastName' placeholder='Smith' required />
+            </div>
+            <br />
+            <div>
+              <label htmlFor='jobTitle'>Job Title</label><br />
+              <select ref={jobTitleRef} name='jobTitle' id="jobTitle" required >
+                {jobTitlesApi.length > 0 &&
+                  jobTitlesApi.sort().map((option, index) => {
+                    return (<option key={index} value={option}>{option}</option>)
+                  })}
+              </select>
+            </div>
+            <br />
+            <div>
+              <label htmlFor='age'>Age</label><br />
+              <input ref={ageRef} name='age' type='number' id='age' placeholder='23' required />
+            </div><br />
+            <button type='submit'>Submit</button>
+          </form>
+        </div>
+        <div>
+          <h2 className="center-text">Current users</h2>
+          <div className='grid'>
+            {attendantsApi.length > 0 &&
+              attendantsApi.sort(function (a, b) { return a.age - b.age; }).map((attendant) => {
+                return (
+                  <Card key={attendant.name + attendant.lastName} attendant={attendant} />
+                )
+              })}
           </div>
-          <br />
-          <div>
-            <label htmlFor='lastName'>Last Name</label><br />
-            <input ref={lastNameRef} name='lastName' id='lastName' placeholder='Smith' required />
-          </div>
-          <br />
-          <div>
-            <label htmlFor='jobTitle'>Job Title</label><br />
-            <select ref={jobTitleRef} name='jobTitle' id="jobTitle" required >
-              {jobTitlesApi.length > 0 &&
-                jobTitlesApi.sort().map((option, index) => {
-                  return (<option key={index} value={option}>{option}</option>)
-                })}
-            </select>
-          </div>
-          <br />
-          <div>
-            <label htmlFor='age'>Age</label><br />
-            <input ref={ageRef} name='age' type='number' id='age' placeholder='23' required />
-          </div><br />
-          <button type='submit'>Submit</button>
-        </form>
-        <h2 className="center-text">Current users</h2>
-        <div className='grid'>
-          {attendantsApi.length > 0 &&
-            attendantsApi.sort(function (a, b) { return a.age - b.age; }).map((attendant) => {
-              return (
-                <Card key={attendant.name + attendant.lastName} attendant={attendant} />
-              )
-            })}
         </div>
       </section>
       <Modal
