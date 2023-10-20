@@ -65,7 +65,7 @@ function Form() {
     <>
       <section className="form-grid">
         {isLoading ? <Loader /> : null}
-        <div className=''>
+        <div>
           <h2>Create new user</h2>
           <form onSubmit={e => handleSubmit(e)}>
             <div>
