@@ -5,6 +5,7 @@ import Card from "./Card";
 function Form() {
   const [employee, setEmployee] = useState([])
   const [jobTitlesFromApi, setJobTitlesFromApi] = useState([])
+
   const nameRef = useRef(null);
   const lastNameRef = useRef(null);
   const jobTitleRef = useRef(null);
@@ -17,7 +18,7 @@ function Form() {
     setEmployee([...employee, employer]);
     e.target.reset();
   }
-
+  
   useEffect(() => {
     const getTitlesOfJob = async () => {
       const res = await getJobTitles()
@@ -43,7 +44,7 @@ function Form() {
           <label htmlFor='jobTitle'>Job Title</label><br />
           <select ref={jobTitleRef} name='jobTitle' id="jobTitle">
             {jobTitlesFromApi.length > 0 &&
-              jobTitlesFromApi.map((option, index) => {
+              jobTitlesFromApi.sort().map((option, index) => {
                 return (<option key={index} value={option}>{option}</option>)
               })}
           </select>
@@ -57,7 +58,7 @@ function Form() {
       </form>
       <h2 className="center-text">Current users</h2>
       {employee.length > 0 &&
-        employee.map((employer, index) => {
+        employee.sort(function (a, b) { return a.age - b.age; }).map((employer, index) => {
           return (
             <Card key={index} employer={employer} />
           )
