@@ -9,6 +9,8 @@
 
 .loader-icon {
     font-size: 10px;
+    /* Some parts of the app use px for width and height while here ems are used. Decide on which approach is right and stay consistent with it */
+    /* Same applies to paddings and margins */
     width: 1em;
     height: 1em;
     border-radius: 50%;
@@ -18,6 +20,7 @@
     transform: translateZ(0);
 }
 
+/* Try not to have abbreviations when naming variables. This could be named e.g. shadowSpin */
 @keyframes mulShdSpin {
 
     0%,
